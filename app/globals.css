@@ -1,3 +1,128 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+SC:wght@300;400&family=EB+Garamond:ital@1&display=swap');
+
+:root {
+  --charcoal: #1a1714;
+  --warm-black: #120f0c;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --cream: #f0ead8;
+  --cream-dim: #c8bfa8;
+  --rust: #8b3a2a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--charcoal);
+  color: var(--cream);
+  min-height: 100vh;
+}
+
+/* Grain texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.6;
+}
+
+/* ── Letter entrance animation ── */
+@keyframes letterDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-60px) rotate(-4deg) scale(1.15);
+    filter: blur(8px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(6px) rotate(0.5deg) scale(0.98);
+    filter: blur(0px);
+  }
+  80% {
+    transform: translateY(-3px) rotate(0deg) scale(1.005);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* ── Subtle float loop ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ── Gold rule draw ── */
+@keyframes ruleDraw {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+
+/* ── Subtitle fade up ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Vignette pulse ── */
+@keyframes vignettePulse {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 0.5; }
+}
+
+.letter {
+  display: inline-block;
+  opacity: 0;
+  animation: letterDrop 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.letter-space {
+  display: inline-block;
+  width: 0.3em;
+}
+
+/* After all letters land, float the whole word group */
+.hello-word {
+  display: inline-block;
+  animation: float 5s ease-in-out infinite;
+  animation-delay: 3s;
+}
+
+.world-word {
+  display: inline-block;
+  animation: float 5s ease-in-out infinite;
+  animation-delay: 3.4s;
+}
+
+.gold-rule {
+  transform-origin: left center;
+  animation: ruleDraw 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 2.2s;
+  opacity: 0;
+}
+
+.subtitle {
+  opacity: 0;
+  animation: fadeUp 1s ease forwards;
+  animation-delay: 2.8s;
+}
+
+.edition-line {
+  opacity: 0;
+  animation: fadeUp 1s ease forwards;
+  animation-delay: 3.3s;
+}
